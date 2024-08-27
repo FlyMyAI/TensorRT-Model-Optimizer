@@ -18,11 +18,119 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
+#
+# SDXL_ONNX_CONFIG = {
+#     "down_blocks.0": {
+#         "dummy_input": {
+#             "hidden_states": (2, 320, 128, 128),
+#             "temb": (2, 1280),
+#         },
+#         "output_names": ["sample", "res_samples_0", "res_samples_1", "res_samples_2"],
+#         "dynamic_axes": {
+#             "hidden_states": {0: "batch_size"},
+#             "temb": {0: "steps"},
+#         },
+#     },
+#     "down_blocks.1": {
+#         "dummy_input": {
+#             "hidden_states": (2, 320, 64, 64),
+#             "temb": (2, 1280),
+#             "encoder_hidden_states": (2, 77, 2048),
+#         },
+#         "output_names": ["sample", "res_samples_0", "res_samples_1", "res_samples_2"],
+#         "dynamic_axes": {
+#             "hidden_states": {0: "batch_size"},
+#             "temb": {0: "steps"},
+#             "encoder_hidden_states": {0: "batch_size"},
+#         },
+#     },
+#     "down_blocks.2": {
+#         "dummy_input": {
+#             "hidden_states": (2, 640, 32, 32),
+#             "temb": (2, 1280),
+#             "encoder_hidden_states": (2, 77, 2048),
+#         },
+#         "output_names": ["sample", "res_samples_0", "res_samples_1"],
+#         "dynamic_axes": {
+#             "hidden_states": {0: "batch_size"},
+#             "temb": {0: "steps"},
+#             "encoder_hidden_states": {0: "batch_size"},
+#         },
+#     },
+#     "mid_block": {
+#         "dummy_input": {
+#             "hidden_states": (2, 1280, 32, 32),
+#             "temb": (2, 1280),
+#             "encoder_hidden_states": (2, 77, 2048),
+#         },
+#         "output_names": ["sample"],
+#         "dynamic_axes": {
+#             "hidden_states": {0: "batch_size"},
+#             "temb": {0: "steps"},
+#             "encoder_hidden_states": {0: "batch_size"},
+#         },
+#     },
+#     "up_blocks.0": {
+#         "dummy_input": {
+#             "hidden_states": (2, 1280, 32, 32),
+#             "res_hidden_states_0": (2, 640, 32, 32),
+#             "res_hidden_states_1": (2, 1280, 32, 32),
+#             "res_hidden_states_2": (2, 1280, 32, 32),
+#             "temb": (2, 1280),
+#             "encoder_hidden_states": (2, 77, 2048),
+#         },
+#         "output_names": ["sample"],
+#         "dynamic_axes": {
+#             "hidden_states": {0: "batch_size"},
+#             "temb": {0: "steps"},
+#             "encoder_hidden_states": {0: "batch_size"},
+#             "res_hidden_states_0": {0: "batch_size"},
+#             "res_hidden_states_1": {0: "batch_size"},
+#             "res_hidden_states_2": {0: "batch_size"},
+#         },
+#     },
+#     "up_blocks.1": {
+#         "dummy_input": {
+#             "hidden_states": (2, 1280, 64, 64),
+#             "res_hidden_states_0": (2, 320, 64, 64),
+#             "res_hidden_states_1": (2, 640, 64, 64),
+#             "res_hidden_states_2": (2, 640, 64, 64),
+#             "temb": (2, 1280),
+#             "encoder_hidden_states": (2, 77, 2048),
+#         },
+#         "output_names": ["sample"],
+#         "dynamic_axes": {
+#             "hidden_states": {0: "batch_size"},
+#             "temb": {0: "steps"},
+#             "encoder_hidden_states": {0: "batch_size"},
+#             "res_hidden_states_0": {0: "batch_size"},
+#             "res_hidden_states_1": {0: "batch_size"},
+#             "res_hidden_states_2": {0: "batch_size"},
+#         },
+#     },
+#     "up_blocks.2": {
+#         "dummy_input": {
+#             "hidden_states": (2, 640, 128, 128),
+#             "res_hidden_states_0": (2, 320, 128, 128),
+#             "res_hidden_states_1": (2, 320, 128, 128),
+#             "res_hidden_states_2": (2, 320, 128, 128),
+#             "temb": (2, 1280),
+#         },
+#         "output_names": ["sample"],
+#         "dynamic_axes": {
+#             "hidden_states": {0: "batch_size"},
+#             "temb": {0: "steps"},
+#             "res_hidden_states_0": {0: "batch_size"},
+#             "res_hidden_states_1": {0: "batch_size"},
+#             "res_hidden_states_2": {0: "batch_size"},
+#         },
+#     },
+# }
 
 SDXL_ONNX_CONFIG = {
     "down_blocks.0": {
         "dummy_input": {
-            "hidden_states": (2, 320, 128, 128),
+            "hidden_states": (2, 320, 64, 64),  # From (2, 320, 128, 128)
             "temb": (2, 1280),
         },
         "output_names": ["sample", "res_samples_0", "res_samples_1", "res_samples_2"],
@@ -33,7 +141,7 @@ SDXL_ONNX_CONFIG = {
     },
     "down_blocks.1": {
         "dummy_input": {
-            "hidden_states": (2, 320, 64, 64),
+            "hidden_states": (2, 320, 32, 32),  # From (2, 320, 64, 64)
             "temb": (2, 1280),
             "encoder_hidden_states": (2, 77, 2048),
         },
@@ -46,7 +154,7 @@ SDXL_ONNX_CONFIG = {
     },
     "down_blocks.2": {
         "dummy_input": {
-            "hidden_states": (2, 640, 32, 32),
+            "hidden_states": (2, 640, 16, 16),  # From (2, 640, 32, 32)
             "temb": (2, 1280),
             "encoder_hidden_states": (2, 77, 2048),
         },
@@ -59,7 +167,7 @@ SDXL_ONNX_CONFIG = {
     },
     "mid_block": {
         "dummy_input": {
-            "hidden_states": (2, 1280, 32, 32),
+            "hidden_states": (2, 1280, 16, 16),  # From (2, 1280, 32, 32)
             "temb": (2, 1280),
             "encoder_hidden_states": (2, 77, 2048),
         },
@@ -72,10 +180,10 @@ SDXL_ONNX_CONFIG = {
     },
     "up_blocks.0": {
         "dummy_input": {
-            "hidden_states": (2, 1280, 32, 32),
-            "res_hidden_states_0": (2, 640, 32, 32),
-            "res_hidden_states_1": (2, 1280, 32, 32),
-            "res_hidden_states_2": (2, 1280, 32, 32),
+            "hidden_states": (2, 1280, 16, 16),  # From (2, 1280, 32, 32)
+            "res_hidden_states_0": (2, 640, 16, 16),  # From (2, 640, 32, 32)
+            "res_hidden_states_1": (2, 1280, 16, 16),  # From (2, 1280, 32, 32)
+            "res_hidden_states_2": (2, 1280, 16, 16),  # From (2, 1280, 32, 32)
             "temb": (2, 1280),
             "encoder_hidden_states": (2, 77, 2048),
         },
@@ -91,10 +199,10 @@ SDXL_ONNX_CONFIG = {
     },
     "up_blocks.1": {
         "dummy_input": {
-            "hidden_states": (2, 1280, 64, 64),
-            "res_hidden_states_0": (2, 320, 64, 64),
-            "res_hidden_states_1": (2, 640, 64, 64),
-            "res_hidden_states_2": (2, 640, 64, 64),
+            "hidden_states": (2, 1280, 32, 32),  # From (2, 1280, 64, 64)
+            "res_hidden_states_0": (2, 320, 32, 32),  # From (2, 320, 64, 64)
+            "res_hidden_states_1": (2, 640, 32, 32),  # From (2, 640, 64, 64)
+            "res_hidden_states_2": (2, 640, 32, 32),  # From (2, 640, 64, 64)
             "temb": (2, 1280),
             "encoder_hidden_states": (2, 77, 2048),
         },
@@ -110,10 +218,10 @@ SDXL_ONNX_CONFIG = {
     },
     "up_blocks.2": {
         "dummy_input": {
-            "hidden_states": (2, 640, 128, 128),
-            "res_hidden_states_0": (2, 320, 128, 128),
-            "res_hidden_states_1": (2, 320, 128, 128),
-            "res_hidden_states_2": (2, 320, 128, 128),
+            "hidden_states": (2, 640, 64, 64),  # From (2, 640, 128, 128)
+            "res_hidden_states_0": (2, 320, 64, 64),  # From (2, 320, 128, 128)
+            "res_hidden_states_1": (2, 320, 64, 64),  # From (2, 320, 128, 128)
+            "res_hidden_states_2": (2, 320, 64, 64),  # From (2, 320, 128, 128)
             "temb": (2, 1280),
         },
         "output_names": ["sample"],
